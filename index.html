@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b140c">
+  <title>AR Dinosaur Experience</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🦖%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./lib/three/three.module.js",
+      "three/addons/": "./lib/three/addons/"
+    }
+  }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <!-- ทุก UI อยู่ใน #overlay เพราะ WebXR DOM Overlay แสดงได้เฉพาะ element นี้ -->
+  <div id="overlay">
+
+    <!-- ───── หน้าเริ่มต้น ───── -->
+    <section id="start-screen">
+      <div class="logo" aria-hidden="true">🦖</div>
+      <h1>JURASSIC <span>AR</span></h1>
+      <p class="tagline">วางไดโนเสาร์ 3D ลงบนพื้นจริงในห้องของคุณ</p>
+
+      <ol class="steps">
+        <li>กด <b>เริ่ม AR</b> แล้วอนุญาตให้ใช้กล้อง</li>
+        <li>ขยับมือถือช้าๆ ให้เห็นพื้นผิว จนเห็นวงแหวนสีเหลือง</li>
+        <li>แตะหน้าจอเพื่อวางไดโนเสาร์ แล้วกดปุ่มสั่งงาน</li>
+      </ol>
+
+      <div id="support-msg" class="notice" hidden></div>
+
+      <div class="start-actions">
+        <button id="btn-start-ar" class="big-btn" disabled>เริ่ม AR</button>
+        <button id="btn-preview" class="ghost-btn">ดูตัวอย่าง 3D (ไม่ใช้กล้อง)</button>
+      </div>
+      <p class="fine">ต้องเปิดผ่าน HTTPS บน Android (Chrome + Google Play Services for AR)</p>
+    </section>
+
+    <!-- ───── HUD ระหว่างเล่น ───── -->
+    <section id="hud" hidden>
+      <header class="hud-top">
+        <span id="mode-chip" class="chip">AR</span>
+        <span id="hint" class="hint">กำลังค้นหาพื้นผิว…</span>
+        <button id="btn-exit" class="icon-btn" aria-label="ออก">✕</button>
+      </header>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <nav class="controls" aria-label="ปุ่มควบคุมไดโนเสาร์">
+        <div class="row">
+          <button class="ctl" id="btn-walk"   data-act="walk"><i>🐾</i>WALK</button>
+          <button class="ctl" id="btn-idle"   data-act="idle"><i>⏸</i>IDLE</button>
+          <button class="ctl hot" id="btn-roar"   data-act="roar"><i>🔊</i>ROAR</button>
+          <button class="ctl hot" id="btn-attack" data-act="attack"><i>🦷</i>ATTACK</button>
+        </div>
+        <div class="row small">
+          <button class="ctl" id="btn-rotl"   data-act="rotl"><i>⟲</i>ซ้าย</button>
+          <button class="ctl" id="btn-rotate" data-act="rotate"><i>⟳</i>ROTATE</button>
+          <button class="ctl" id="btn-smaller" data-act="smaller"><i>－</i>เล็ก</button>
+          <button class="ctl" id="btn-bigger"  data-act="bigger"><i>＋</i>ใหญ่</button>
+          <button class="ctl danger" id="btn-reset" data-act="reset"><i>↺</i>RESET</button>
+        </div>
+      </nav>
+    </section>
+
+    <div id="toast" role="status"></div>
+  </div>
+</body>
+</html>
